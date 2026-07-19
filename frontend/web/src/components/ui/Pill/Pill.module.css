@@ -1,0 +1,27 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-4) var(--space-12);
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--color-border-light);
+  background-color: var(--color-brand-white);
+  color: var(--color-text-primary);
+  transition: all 0.2s ease;
+}
+
+.pill:hover {
+  background-color: var(--color-shade-30);
+}
+
+.active {
+  background-color: var(--color-brand-black);
+  color: var(--color-brand-white);
+  border-color: var(--color-brand-black);
+}
+
+.active:hover {
+  background-color: var(--color-brand-teal);
+}
