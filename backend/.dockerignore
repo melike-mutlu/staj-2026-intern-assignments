@@ -1,0 +1,10 @@
+.venv/
+.pycache/
+__pycache__/
+.pytest_cache/
+*.pyc
+.env
+commerce.db
+test.db
+*.sqlite
+*.sqlite3
