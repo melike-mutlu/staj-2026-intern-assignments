@@ -6,3 +6,6 @@ __pycache__/
 .env
 commerce.db
 test.db
+e2e.db
+e2e.db-shm
+e2e.db-wal

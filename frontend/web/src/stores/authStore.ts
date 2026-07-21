@@ -1,23 +1,78 @@
 import { create } from 'zustand';
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-}
+import { persist } from 'zustand/middleware';
+import { queryClient } from '../lib/queryClient';
+import type { ApiUser, AuthResponse } from '../types/api';
 
 interface AuthState {
-  user: User | null;
-  token: string | null;
+  user: ApiUser | null;
+  accessToken: string | null;
+  refreshToken: string | null;
   isAuthenticated: boolean;
-  login: (user: User, token: string) => void;
+  setSession: (response: AuthResponse) => void;
+  updateSession: (response: AuthResponse) => void;
   logout: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  token: null,
-  isAuthenticated: false,
-  login: (user, token) => set({ user, token, isAuthenticated: true }),
-  logout: () => set({ user: null, token: null, isAuthenticated: false }),
-}));
+const AUTH_STORE_VERSION = 1;
+
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      user: null,
+      accessToken: null,
+      refreshToken: null,
+      isAuthenticated: false,
+
+      setSession: (response) =>
+        set({
+          user: response.user,
+          accessToken: response.access_token,
+          refreshToken: response.refresh_token,
+          isAuthenticated: true,
+        }),
+
+      updateSession: (response) =>
+        set({
+          user: response.user,
+          accessToken: response.access_token,
+          refreshToken: response.refresh_token,
+          isAuthenticated: true,
+        }),
+
+      logout: () => {
+        set({
+          user: null,
+          accessToken: null,
+          refreshToken: null,
+          isAuthenticated: false,
+        });
+        queryClient.removeQueries({ queryKey: ['cart'] });
+        queryClient.removeQueries({ queryKey: ['addresses'] });
+        queryClient.removeQueries({ queryKey: ['orders'] });
+        queryClient.removeQueries({ queryKey: ['order'] });
+        queryClient.removeQueries({ queryKey: ['favorites'] });
+      },
+    }),
+    {
+      name: 'shop-auth',
+      version: AUTH_STORE_VERSION,
+      partialize: (state) => ({
+        user: state.user,
+        accessToken: state.accessToken,
+        refreshToken: state.refreshToken,
+        isAuthenticated: state.isAuthenticated,
+      }),
+      migrate: (persisted, version) => {
+        if (version < AUTH_STORE_VERSION) {
+          return { user: null, accessToken: null, refreshToken: null, isAuthenticated: false };
+        }
+        return persisted as {
+          user: ApiUser | null;
+          accessToken: string | null;
+          refreshToken: string | null;
+          isAuthenticated: boolean;
+        };
+      },
+    }
+  )
+);
