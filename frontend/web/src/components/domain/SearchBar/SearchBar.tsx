@@ -15,6 +15,7 @@ export const SearchBar = React.forwardRef<HTMLInputElement, SearchBarProps>(
           type="search"
           className={styles.input}
           placeholder="Search for products..."
+          aria-label="Search products"
           {...props}
         />
       </div>
