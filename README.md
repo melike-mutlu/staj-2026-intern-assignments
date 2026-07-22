@@ -72,6 +72,9 @@ Takım uygulaması artık tek backend'i kullanan web ve Expo mobil istemcilerind
 | Frontend API teslim rehberi | [`backend/docs/FRONTEND_HANDOFF.md`](./backend/docs/FRONTEND_HANDOFF.md) |
 | QA raporu | [`backend/qa/TEST_REPORT.md`](./backend/qa/TEST_REPORT.md) |
 | Özel skill ve agent | [`SKILLS.md`](./SKILLS.md) |
+| PM planı, board ve retrospektif | [`PM_NOTES.md`](./PM_NOTES.md) |
+| Lighthouse raporu | [`docs/LIGHTHOUSE_REPORT.md`](./docs/LIGHTHOUSE_REPORT.md) |
+| Teslim PR açıklaması | [`PR_DESCRIPTION.md`](./PR_DESCRIPTION.md) |
 
 Backend'i Docker ile başlattıktan sonra web ve mobil istemciler varsayılan olarak `http://localhost:8000` adresindeki aynı API'yi kullanır. Demo hesabı: `demo@eticaret.com` / `DemoPass123`.
 
@@ -80,3 +83,38 @@ Tüm hızlı kabul kontrolleri:
 ```bash
 bash .claude/skills/integration-qa/scripts/run-integration-qa.sh
 ```
+
+## Uygulama Görüntüleri
+
+| Web ana sayfa | Web checkout |
+| --- | --- |
+| ![Web ana sayfa](./docs/screenshots/web-home.png) | ![Web checkout](./docs/screenshots/web-checkout.png) |
+
+| Mobil ana sayfa | Mobil checkout |
+| --- | --- |
+| ![Mobil ana sayfa](./docs/screenshots/mobile-home.png) | ![Mobil checkout](./docs/screenshots/mobile-checkout.png) |
+
+Bu görüntüler mock veriyle değil, izole ve seed edilmiş FastAPI backend'ine bağlı çalışan uygulamadan alınmıştır.
+
+## API Tiplerini Yenileme
+
+Web ve mobil API tipleri [`backend/openapi.json`](./backend/openapi.json) sözleşmesinden `openapi-typescript` ile üretilir:
+
+```bash
+cd tools/api-contract
+npm ci
+npm run generate
+```
+
+Üretilen dosyalar:
+
+- `frontend/web/src/types/openapi.d.ts`
+- `frontend/mobile/src/types/openapi.d.ts`
+
+CI içindeki `contract` işi bu komutu yeniden çalıştırır ve üretilen tiplerde takip edilmeyen bir fark varsa build'i durdurur.
+
+## Teslim Durumu
+
+- Tamamlandı: Swagger/OpenAPI, Docker, seed, gerçek web ve mobil API entegrasyonu, kritik checkout akışları, otomatik backend/web/mobil/E2E testleri, CI, ekran görüntüleri, PM notları ve özel skill/agent.
+- Takım tarafından eklenecek: Figma dosyasının paylaşım bağlantısı ve YouTube demo videosu bağlantısı.
+- Upstream teslim PR'ı: [VB10/staj-2026-intern-assignments#34](https://github.com/VB10/staj-2026-intern-assignments/pull/34)

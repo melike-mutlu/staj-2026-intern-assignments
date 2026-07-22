@@ -1,0 +1,14 @@
+{
+  "name": "eticaret-api-contract-tools",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "generate": "npm run generate:web && npm run generate:mobile",
+    "generate:web": "openapi-typescript ../../backend/openapi.json -o ../../frontend/web/src/types/openapi.d.ts",
+    "generate:mobile": "openapi-typescript ../../backend/openapi.json -o ../../frontend/mobile/src/types/openapi.d.ts"
+  },
+  "devDependencies": {
+    "openapi-typescript": "7.13.0",
+    "typescript": "~5.9.3"
+  }
+}

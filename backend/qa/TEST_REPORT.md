@@ -22,10 +22,13 @@ Backend API ile web ve mobil istemcilerin tam entegrasyon kontrolu basariyla tam
 | Backend | pytest API ve E2E API, 22 test | PASS |
 | Web | oxlint + TypeScript + Vite production build | PASS |
 | Web E2E | Playwright Chromium, 21 senaryo | PASS |
+| API contract | `openapi-typescript` web + mobil uretim ve drift kontrolu | PASS |
 | Mobil | TypeScript strict kontrol | PASS |
 | Mobil | Expo web export, 15 route | PASS |
 | Mobil canlı akış | API urunleri -> detay -> login -> sepet -> checkout -> siparis onayi | PASS |
 | Mobil tarayıcı | Console error kontrolu | PASS, 0 hata |
+| Lighthouse mobil | Performance 90; accessibility/best practices/SEO 100 | PASS |
+| Lighthouse masaustu | Tum kategoriler 100 | PASS |
 
 Web E2E navigasyonlari harici urun gorsellerinin gecikmesine bagimli olmamasi icin `domcontentloaded` bekleme stratejisine gecirildi. Icerik ve API sonucu kontrolleri ilgili gorunur elementleri beklemeye devam eder.
 
@@ -114,6 +117,7 @@ Detayli Docker adimlari:
 | Xcode UUID uretimi | PASS, guvenli `uuid@11.1.1` override'i ile calisiyor |
 | Ozel `integration-qa` skill dogrulamasi | PASS |
 | Gercek API kullanim guard'i | PASS, mock import/kullanim yok |
+| Lighthouse layout shift | PASS, mobil ve masaustu CLS 0 |
 
 Expo'nun `xcode@3.0.1 -> uuid@7.0.3` zincirindeki guvenlik uyarisi, sadece bu alt bagimliligi CommonJS uyumlu guvenli `uuid@11.1.1` surumune sabitleyen npm override'i ile kapatildi. Expo export, paket uyumluluk kontrolu ve dogrudan Xcode UUID uretimi yeniden dogrulandi.
 

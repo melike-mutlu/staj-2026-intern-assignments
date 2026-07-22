@@ -26,7 +26,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
           {icon}
         </div>
       )}
-      <h3 className={cn('text-heading-20', styles.title)}>{title}</h3>
+      <h2 className={cn('text-heading-20', styles.title)}>{title}</h2>
       {description && <p className={cn('text-body-16', styles.description)}>{description}</p>}
       {action && <div>{action}</div>}
     </div>

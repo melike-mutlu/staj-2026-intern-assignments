@@ -6,6 +6,31 @@ on:
   pull_request:
 
 jobs:
+  contract:
+    name: OpenAPI Contract Types
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: tools/api-contract/package-lock.json
+
+      - name: Install contract tools
+        working-directory: tools/api-contract
+        run: npm ci
+
+      - name: Generate API types
+        working-directory: tools/api-contract
+        run: npm run generate
+
+      - name: Verify generated files are current
+        run: git diff --exit-code -- frontend/web/src/types/openapi.d.ts frontend/mobile/src/types/openapi.d.ts
+
   backend:
     name: Backend Tests
     runs-on: ubuntu-latest
@@ -14,10 +39,10 @@ jobs:
         working-directory: backend
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
           cache: pip
@@ -37,10 +62,10 @@ jobs:
         working-directory: frontend/web
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: "20"
           cache: npm
@@ -63,10 +88,10 @@ jobs:
         working-directory: frontend/mobile
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: "20"
           cache: npm
@@ -87,13 +112,13 @@ jobs:
   e2e:
     name: E2E Tests
     runs-on: ubuntu-latest
-    needs: [backend, frontend, mobile]
+    needs: [contract, backend, frontend, mobile]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
           cache: pip
@@ -103,7 +128,7 @@ jobs:
         run: pip install -r backend/requirements.txt
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: "20"
           cache: npm

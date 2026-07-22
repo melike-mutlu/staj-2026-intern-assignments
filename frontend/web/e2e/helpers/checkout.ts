@@ -6,9 +6,9 @@ import { type Page, expect } from '@playwright/test';
 export async function navigateToProductDetail(page: Page, productName: string): Promise<void> {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   // Wait for products to load
-  await page.getByRole('heading', { name: productName, level: 4 }).first().waitFor();
+  await page.getByRole('heading', { name: productName, level: 2 }).first().waitFor();
   // Click the product card link
-  await page.getByRole('heading', { name: productName, level: 4 }).first().click();
+  await page.getByRole('heading', { name: productName, level: 2 }).first().click();
   // Wait for product detail page
   await page.waitForURL(/\/product\/\d+/);
 }

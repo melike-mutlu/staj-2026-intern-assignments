@@ -14,6 +14,10 @@ This project is a modern, responsive e-commerce web application built with React
 - **Vanilla CSS** with CSS Modules for styling
 - **Playwright** for end-to-end (E2E) testing
 
+## Why These Technologies?
+
+React and TypeScript were selected because the team can share typed domain concepts with the Expo client while keeping the web UI component-based. Vite provides a fast local workflow and produces a small, code-split production build. TanStack Query owns server state and cache invalidation, while Zustand is limited to client-owned auth state. CSS Modules preserve the design-system tokens without introducing a second styling runtime.
+
 ## 🏗️ Architecture
 
 The frontend follows a component-driven architecture:
@@ -140,11 +144,29 @@ To prevent interference with your development database (`commerce.db`), the E2E 
 
 ## 🔄 GitHub Actions CI
 
-The project uses a unified GitHub Actions workflow (`.github/workflows/ci.yml`) which runs on every push and pull request. It includes 3 jobs:
-1. **Backend Tests:** Runs `pytest`.
-2. **Frontend Lint & Build:** Runs `npm run lint` and `npm run build`.
-3. **E2E Tests:** Sets up both backend (with isolated `e2e.db`) and frontend, waits for them to be healthy, and executes the Playwright test suite.
+The project uses a unified GitHub Actions workflow (`.github/workflows/ci.yml`) on every push and pull request. It verifies the generated OpenAPI contract, backend tests, web lint/build, mobile type/export checks, and the isolated Playwright E2E suite.
+
+## Generated API Types
+
+Do not edit `src/types/openapi.d.ts` by hand. Regenerate web and mobile types together from the committed backend contract:
+
+```bash
+cd ../../tools/api-contract
+npm ci
+npm run generate
+```
+
+Application-facing aliases live in `src/types/api.ts`. CI repeats generation and fails when the committed declarations no longer match `backend/openapi.json`.
+
+## Screenshots and Lighthouse
+
+| Home | Checkout |
+| --- | --- |
+| ![Web home](../../docs/screenshots/web-home.png) | ![Web checkout](../../docs/screenshots/web-checkout.png) |
+
+The reproducible mobile and desktop performance/accessibility results are in [`docs/LIGHTHOUSE_REPORT.md`](../../docs/LIGHTHOUSE_REPORT.md). The final production-preview scores are 90 performance on mobile and 100 performance on desktop; accessibility, best practices, and SEO are 100 on both profiles.
 
 ## ⚠️ Known Limitations
 - The backend rate limit is intentionally raised to `10000` during E2E tests to prevent `429 Too Many Requests` due to the speed of automated tests.
 - E2E tests must be run against a clean database state to guarantee determinism. Do not use the `commerce.db` for E2E tests.
+- The API-contract tool has development-only transitive audit warnings inside Redocly's OpenAPI parser. It runs only against the repository's trusted local `backend/openapi.json`; production dependency audits remain clean.

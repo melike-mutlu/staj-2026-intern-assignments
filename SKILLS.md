@@ -18,7 +18,7 @@ Doğrudan çalışan kontrol:
 bash .claude/skills/integration-qa/scripts/run-integration-qa.sh
 ```
 
-Ürettiği çıktı backend pytest sonucunu, web lint/build sonucunu, mobil typecheck/Expo export sonucunu ve gerçek API kullanım kontrolünü içerir.
+Ürettiği çıktı OpenAPI tip üretimi ve contract drift kontrolünü, backend pytest sonucunu, web lint/build sonucunu, mobil typecheck/Expo export sonucunu ve gerçek API kullanım kontrolünü içerir.
 
 ## `integration-qa` Agent
 

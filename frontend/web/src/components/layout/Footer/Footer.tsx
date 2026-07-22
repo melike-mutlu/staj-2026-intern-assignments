@@ -8,23 +8,23 @@ export const Footer: React.FC = () => {
       <PageContainer>
         <div className={styles.grid}>
           <div className={styles.column}>
-            <h4 className={styles.title}>SHOP</h4>
+            <h2 className={styles.title}>SHOP</h2>
             <p className={styles.link}>The best place to buy things.</p>
           </div>
           <div className={styles.column}>
-            <h4 className={styles.title}>Categories</h4>
+            <h2 className={styles.title}>Categories</h2>
             <a href="#" className={styles.link}>Electronics</a>
             <a href="#" className={styles.link}>Clothing</a>
             <a href="#" className={styles.link}>Home</a>
           </div>
           <div className={styles.column}>
-            <h4 className={styles.title}>Support</h4>
+            <h2 className={styles.title}>Support</h2>
             <a href="#" className={styles.link}>Contact Us</a>
             <a href="#" className={styles.link}>FAQ</a>
             <a href="#" className={styles.link}>Shipping</a>
           </div>
           <div className={styles.column}>
-            <h4 className={styles.title}>Legal</h4>
+            <h2 className={styles.title}>Legal</h2>
             <a href="#" className={styles.link}>Terms of Service</a>
             <a href="#" className={styles.link}>Privacy Policy</a>
           </div>

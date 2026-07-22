@@ -75,7 +75,7 @@ export const HomePage: React.FC = () => {
 
       {productsQuery.isLoading && (
         <ProductGrid>
-          {Array.from({ length: 8 }).map((_, i) => (
+          {Array.from({ length: 6 }).map((_, i) => (
             <div key={i}>
               <Skeleton style={{ width: '100%', aspectRatio: '1', borderRadius: 'var(--radius-12)', marginBottom: 'var(--space-12)' }} />
               <Skeleton style={{ width: '70%', height: 20, marginBottom: 'var(--space-4)' }} />
@@ -117,10 +117,11 @@ export const HomePage: React.FC = () => {
             </div>
           )}
           <ProductGrid>
-            {products.map((product) => (
+            {products.map((product, index) => (
               <ProductCard
                 key={product.id}
                 product={product}
+                imagePriority={index < 2}
                 isFavorite={isFavorite(Number(product.id))}
                 isFavoriteDisabled={isFavoritePending(Number(product.id)) || isFavoritesUnavailable}
                 onFavoriteToggle={toggleFavorite}

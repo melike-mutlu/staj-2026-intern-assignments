@@ -4,13 +4,26 @@ import type { Product } from '../types/product';
 
 // --- Mapper ---
 
+function optimizeCatalogImage(imageUrl: string): string {
+  if (!imageUrl.startsWith('https://images.unsplash.com/')) {
+    return imageUrl;
+  }
+
+  const url = new URL(imageUrl);
+  url.searchParams.set('auto', 'format');
+  url.searchParams.set('fit', 'crop');
+  url.searchParams.set('w', '900');
+  url.searchParams.set('q', '80');
+  return url.toString();
+}
+
 export function mapApiProductToProduct(apiProduct: ApiProduct): Product {
   return {
     id: String(apiProduct.id),
     name: apiProduct.name,
     description: apiProduct.description,
     price: apiProduct.price,
-    image: apiProduct.image_url,
+    image: optimizeCatalogImage(apiProduct.image_url),
     category: apiProduct.category?.name ?? '',
     slug: apiProduct.slug,
     stock: apiProduct.stock,

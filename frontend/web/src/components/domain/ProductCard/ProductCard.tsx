@@ -11,6 +11,7 @@ export interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {
   onFavoriteToggle?: (id: number) => void;
   isFavorite?: boolean;
   isFavoriteDisabled?: boolean;
+  imagePriority?: boolean;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
@@ -18,6 +19,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onFavoriteToggle,
   isFavorite = false,
   isFavoriteDisabled = false,
+  imagePriority = false,
   className,
   ...props
 }) => {
@@ -33,6 +35,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 src={product.image}
                 alt={product.name}
                 className={styles.image}
+                width={600}
+                height={600}
+                loading={imagePriority ? 'eager' : 'lazy'}
+                fetchPriority={imagePriority ? 'high' : 'auto'}
                 onError={() => setImageError(true)}
               />
             ) : (
@@ -41,7 +47,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               </div>
             )}
           </div>
-          <h4 className={styles.title}>{product.name}</h4>
+          <h2 className={styles.title}>{product.name}</h2>
           <span className={styles.price}>{formatPrice(product.price)}</span>
         </div>
       </Link>

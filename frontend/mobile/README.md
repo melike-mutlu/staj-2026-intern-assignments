@@ -2,6 +2,10 @@
 
 Expo Router + React Native ile iOS, Android ve web üzerinde çalışan e-ticaret istemcisidir. Ürün, kullanıcı, sepet, adres ve sipariş verileri mock dosyadan değil FastAPI backend'inden gelir.
 
+## Neden Bu Teknolojiler?
+
+React Native ve Expo, tek TypeScript kod tabanıyla iOS, Android ve web hedeflerini dokuz günlük takvimde yönetilebilir tuttuğu için seçildi. Expo Router dosya tabanlı navigasyonu ve korumalı akışları sadeleştirirken TanStack Query sunucu verisi, tekrar deneme ve cache sorumluluğunu üstlenir. Oturum token'ları platforma göre SecureStore veya güvenli web saklama katmanında tutulur. Aynı OpenAPI sözleşmesinden üretilen tipler mobil ve web istemcilerinin backend ile aynı veri modelini kullanmasını sağlar.
+
 ## Özellikler
 
 - Gerçek API'den ürün listesi, kategori filtresi, arama ve ürün detayı
@@ -76,6 +80,24 @@ Tüm proje için ortak kontrol repo kökünde çalıştırılır:
 ```bash
 bash .claude/skills/integration-qa/scripts/run-integration-qa.sh
 ```
+
+## OpenAPI Tipleri
+
+`src/types/openapi.d.ts` elle düzenlenmez. Backend sözleşmesi değişince repo kökünden şu araç çalıştırılır:
+
+```bash
+cd tools/api-contract
+npm ci
+npm run generate
+```
+
+Mobil uygulamanın okunabilir tip takma adları `src/types/api.ts` içindedir. CI, üretilen dosya ile `backend/openapi.json` arasında fark kalmadığını kontrol eder.
+
+## Ekran Görüntüleri
+
+| Ana sayfa | Checkout |
+| --- | --- |
+| ![Mobil ana sayfa](../../docs/screenshots/mobile-home.png) | ![Mobil checkout](../../docs/screenshots/mobile-checkout.png) |
 
 ## Klasör Yapısı
 

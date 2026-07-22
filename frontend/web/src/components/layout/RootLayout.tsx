@@ -9,7 +9,7 @@ export const RootLayout: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Navbar />
-      <main style={{ flex: 1, padding: 'var(--space-32) 0' }}>
+      <main style={{ flex: 1, minHeight: 'calc(100vh - 64px)', padding: 'var(--space-32) 0' }}>
         <Suspense
           fallback={(
             <PageContainer>

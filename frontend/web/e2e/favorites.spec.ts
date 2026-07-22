@@ -9,7 +9,7 @@ test.describe('Favorites', () => {
 
     // Wait for products
     await expect(
-      page.getByRole('heading', { name: 'Nova X Pro', level: 4 })
+      page.getByRole('heading', { name: 'Nova X Pro', level: 2 })
     ).toBeVisible();
 
     // Find the favorite button for the first product
@@ -58,7 +58,7 @@ test.describe('Favorites', () => {
 
     // Wait for products
     await expect(
-      page.getByRole('heading', { name: 'Nova X Pro', level: 4 })
+      page.getByRole('heading', { name: 'Nova X Pro', level: 2 })
     ).toBeVisible();
 
     // Click favorite button as guest
