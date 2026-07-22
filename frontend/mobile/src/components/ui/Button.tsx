@@ -45,6 +45,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <TouchableOpacity
+      accessibilityRole="button"
       disabled={disabled || loading}
       style={[
         styles.button,

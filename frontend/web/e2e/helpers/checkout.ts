@@ -4,7 +4,7 @@ import { type Page, expect } from '@playwright/test';
  * Navigate to a product detail page by clicking its card on the home page.
  */
 export async function navigateToProductDetail(page: Page, productName: string): Promise<void> {
-  await page.goto('/');
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
   // Wait for products to load
   await page.getByRole('heading', { name: productName, level: 4 }).first().waitFor();
   // Click the product card link

@@ -13,7 +13,7 @@ test.describe('Authentication', () => {
   });
 
   test('failed login shows error message', async ({ page }) => {
-    await page.goto('/login');
+    await page.goto('/login', { waitUntil: 'domcontentloaded' });
     await page.getByLabel('Email').fill(DEMO_EMAIL);
     await page.getByLabel('Password', { exact: true }).fill('WrongPassword123');
     await page.getByRole('button', { name: 'Login' }).click();
@@ -28,7 +28,7 @@ test.describe('Authentication', () => {
 
   test('protected route redirects to login and back after success', async ({ page }) => {
     // Visit protected route while logged out
-    await page.goto('/orders');
+    await page.goto('/orders', { waitUntil: 'domcontentloaded' });
 
     // Should be redirected to login
     await expect(page).toHaveURL(/\/login/);
@@ -49,7 +49,7 @@ test.describe('Authentication', () => {
     await expect(page.getByRole('link', { name: 'Profile' })).toBeVisible();
 
     // Go to profile and logout
-    await page.goto('/profile');
+    await page.goto('/profile', { waitUntil: 'domcontentloaded' });
     await expect(page.getByRole('heading', { name: 'Profile Settings' })).toBeVisible();
 
     await page.getByRole('button', { name: 'Logout' }).click();
@@ -58,7 +58,7 @@ test.describe('Authentication', () => {
     await expect(page).toHaveURL(/\/login/);
 
     // Try to access profile — should redirect to login
-    await page.goto('/profile');
+    await page.goto('/profile', { waitUntil: 'domcontentloaded' });
     await expect(page).toHaveURL(/\/login/);
   });
 });

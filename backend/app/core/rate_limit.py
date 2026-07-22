@@ -21,6 +21,9 @@ class InMemoryRateLimitMiddleware(BaseHTTPMiddleware):
         super().__init__(app)
 
     async def dispatch(self, request: Request, call_next):
+        if request.method == "OPTIONS":
+            return await call_next(request)
+
         settings = get_settings()
         now = time.monotonic()
         client_host = request.client.host if request.client else "unknown"

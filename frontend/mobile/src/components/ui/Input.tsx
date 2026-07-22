@@ -7,11 +7,12 @@ export interface InputProps extends TextInputProps {
   error?: string;
 }
 
-export const Input: React.FC<InputProps> = ({ label, error, style, ...props }) => {
+export const Input: React.FC<InputProps> = ({ label, error, style, accessibilityLabel, ...props }) => {
   return (
     <View style={styles.container}>
       {label && <Text style={styles.label}>{label}</Text>}
       <TextInput
+        accessibilityLabel={accessibilityLabel ?? label}
         style={[
           styles.input,
           error ? styles.inputError : null,

@@ -28,7 +28,7 @@ export async function registerUser(
   const password = options?.password ?? TEST_PASSWORD;
   const fullName = options?.fullName ?? 'E2E Test User';
 
-  await page.goto('/register');
+  await page.goto('/register', { waitUntil: 'domcontentloaded' });
   await page.getByLabel('Full Name').fill(fullName);
   await page.getByLabel('Email').fill(email);
   await page.getByLabel('Password', { exact: true }).fill(password);
@@ -51,7 +51,7 @@ export async function loginUser(
   const email = options?.email ?? DEMO_EMAIL;
   const password = options?.password ?? DEMO_PASSWORD;
 
-  await page.goto('/login');
+  await page.goto('/login', { waitUntil: 'domcontentloaded' });
   await page.getByLabel('Email').fill(email);
   await page.getByLabel('Password', { exact: true }).fill(password);
   await page.getByRole('button', { name: 'Login' }).click();

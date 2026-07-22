@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Product Catalog & Search', () => {
   test('home page shows seed products', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
     // Wait for products to load — check a known seed product
     await expect(page.getByRole('heading', { name: 'Nova X Pro', level: 4 })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Pixel Lite 8', level: 4 })).toBeVisible();
@@ -10,7 +10,7 @@ test.describe('Product Catalog & Search', () => {
   });
 
   test('category filter updates product list', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
     // Wait for products
     await expect(page.getByRole('heading', { name: 'Nova X Pro', level: 4 })).toBeVisible();
 
@@ -26,7 +26,7 @@ test.describe('Product Catalog & Search', () => {
   });
 
   test('search returns matching results', async ({ page }) => {
-    await page.goto('/search');
+    await page.goto('/search', { waitUntil: 'domcontentloaded' });
 
     const searchInput = page.getByLabel('Search products');
     await searchInput.fill('Nova');
@@ -36,7 +36,7 @@ test.describe('Product Catalog & Search', () => {
   });
 
   test('search shows empty state for no results', async ({ page }) => {
-    await page.goto('/search');
+    await page.goto('/search', { waitUntil: 'domcontentloaded' });
 
     const searchInput = page.getByLabel('Search products');
     await searchInput.fill('xyznonexistent12345');
@@ -46,7 +46,7 @@ test.describe('Product Catalog & Search', () => {
   });
 
   test('product card navigates to detail page', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
     await expect(page.getByRole('heading', { name: 'Nova X Pro', level: 4 })).toBeVisible();
 
     // Click the product card
@@ -58,7 +58,7 @@ test.describe('Product Catalog & Search', () => {
   });
 
   test('invalid product ID shows not found', async ({ page }) => {
-    await page.goto('/product/99999');
+    await page.goto('/product/99999', { waitUntil: 'domcontentloaded' });
 
     await expect(page.getByText(/Ürün bulunamadı/i)).toBeVisible();
   });

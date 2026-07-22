@@ -13,7 +13,7 @@ test.describe('Checkout Negative Cases', () => {
     await registerUser(page);
 
     // Go directly to checkout with empty cart
-    await page.goto('/checkout');
+    await page.goto('/checkout', { waitUntil: 'domcontentloaded' });
 
     // Should be redirected to cart page
     await expect(page).toHaveURL(/\/cart/);
@@ -24,7 +24,7 @@ test.describe('Checkout Negative Cases', () => {
     await registerUser(page);
     await navigateToProductDetail(page, 'Pixel Lite 8');
     await addProductToCartFromDetail(page);
-    await page.goto('/checkout');
+    await page.goto('/checkout', { waitUntil: 'domcontentloaded' });
 
     // Order button should be disabled (no address selected)
     const orderButton = page.getByRole('button', {
@@ -38,7 +38,7 @@ test.describe('Checkout Negative Cases', () => {
     await registerUser(page);
     await navigateToProductDetail(page, 'SwiftCharge 65W');
     await addProductToCartFromDetail(page);
-    await page.goto('/checkout');
+    await page.goto('/checkout', { waitUntil: 'domcontentloaded' });
     await createTestAddress(page);
 
     // Submit form without filling payment — click the order button which submits the form
@@ -55,7 +55,7 @@ test.describe('Checkout Negative Cases', () => {
     await registerUser(page);
     await navigateToProductDetail(page, 'Pulse ANC Kulaklik');
     await addProductToCartFromDetail(page);
-    await page.goto('/checkout');
+    await page.goto('/checkout', { waitUntil: 'domcontentloaded' });
     await createTestAddress(page);
 
     // Fill with wrong card number
@@ -78,7 +78,7 @@ test.describe('Checkout Negative Cases', () => {
     await registerUser(page);
     await navigateToProductDetail(page, 'SwiftCharge 65W');
     await addProductToCartFromDetail(page);
-    await page.goto('/checkout');
+    await page.goto('/checkout', { waitUntil: 'domcontentloaded' });
     await createTestAddress(page);
 
     await page.getByLabel('Test Kartı Üzerindeki İsim').fill('Demo Kullanıcı');
@@ -98,7 +98,7 @@ test.describe('Checkout Negative Cases', () => {
     await registerUser(page);
     await navigateToProductDetail(page, 'AtlasBook Air 14');
     await addProductToCartFromDetail(page);
-    await page.goto('/checkout');
+    await page.goto('/checkout', { waitUntil: 'domcontentloaded' });
     await createTestAddress(page);
     await fillTestPaymentForm(page);
 
@@ -140,7 +140,7 @@ test.describe('Checkout Negative Cases', () => {
     // Need to be authenticated for order-confirm route
     await registerUser(page);
 
-    await page.goto('/order-confirm/abc');
+    await page.goto('/order-confirm/abc', { waitUntil: 'domcontentloaded' });
     await expect(page.getByText(/Sipariş bulunamadı/i)).toBeVisible();
   });
 });

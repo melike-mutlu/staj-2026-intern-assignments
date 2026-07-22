@@ -13,7 +13,7 @@ test.describe('Critical Checkout Flow', () => {
     await registerUser(page);
 
     // 2. Verify authenticated — Profile link should be visible
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
     await expect(page.getByRole('link', { name: 'Profile' })).toBeVisible();
 
     // 3. Wait for products and navigate to product detail
@@ -26,7 +26,7 @@ test.describe('Critical Checkout Flow', () => {
     await expect(page.getByRole('link', { name: /Cart, \d+ item/i })).toBeVisible();
 
     // 6. Go to cart page
-    await page.goto('/cart');
+    await page.goto('/cart', { waitUntil: 'domcontentloaded' });
     await expect(page.getByRole('heading', { name: 'Shopping Cart' })).toBeVisible();
     await expect(page.getByText('Nova X Pro')).toBeVisible();
 
@@ -82,7 +82,7 @@ test.describe('Critical Checkout Flow', () => {
     ).not.toBeVisible();
 
     // 17. Go to orders page
-    await page.goto('/orders');
+    await page.goto('/orders', { waitUntil: 'domcontentloaded' });
     await expect(
       page.getByRole('heading', { name: 'Siparişlerim' })
     ).toBeVisible();

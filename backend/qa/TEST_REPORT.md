@@ -1,19 +1,33 @@
 # Backend QA Test Raporu
 
-Rapor tarihi: 2026-07-18
+Rapor tarihi: 2026-07-22
 
 ## Ozet
 
-Backend API icin otomatik test paketi genisletildi ve son kosum basariyla tamamlandi.
+Backend API ile web ve mobil istemcilerin tam entegrasyon kontrolu basariyla tamamlandi.
 
 | Alan | Sonuc |
 | --- | --- |
 | Test framework | pytest |
-| Test sayisi | 21 |
-| Basarili | 21 |
+| Test sayisi | 22 |
+| Basarili | 22 |
 | Basarisiz | 0 |
 | Son komut | `pytest` |
 | Son durum | PASS |
+
+## Fullstack Entegrasyon Sonuclari
+
+| Katman | Kontrol | Sonuc |
+| --- | --- | --- |
+| Backend | pytest API ve E2E API, 22 test | PASS |
+| Web | oxlint + TypeScript + Vite production build | PASS |
+| Web E2E | Playwright Chromium, 21 senaryo | PASS |
+| Mobil | TypeScript strict kontrol | PASS |
+| Mobil | Expo web export, 15 route | PASS |
+| Mobil canlı akış | API urunleri -> detay -> login -> sepet -> checkout -> siparis onayi | PASS |
+| Mobil tarayıcı | Console error kontrolu | PASS, 0 hata |
+
+Web E2E navigasyonlari harici urun gorsellerinin gecikmesine bagimli olmamasi icin `domcontentloaded` bekleme stratejisine gecirildi. Icerik ve API sonucu kontrolleri ilgili gorunur elementleri beklemeye devam eder.
 
 ## Kapsanan Alanlar
 
@@ -47,7 +61,7 @@ pytest
 Beklenen sonuc:
 
 ```text
-21 passed
+22 passed
 ```
 
 ## Kritik Kabul Kriterleri
@@ -81,10 +95,32 @@ Detayli Docker adimlari:
 
 - `backend/docs/DOCKER_RUNBOOK.md`
 
+## Entegrasyonda Duzeltilen Hatalar
+
+- Mobil checkout ve profil ekranlari API hatasini artik bos sepet veya bos siparis listesi gibi gostermiyor; hata mesaji ve yeniden deneme aksiyonu sunuyor.
+- Misafir kullanici urun detayindan, sepetten veya checkout ekranindan giris yaptiginda basladigi ekrana geri donuyor.
+- Mobil form alanlarina gorunur etiketleriyle uyumlu erisilebilirlik isimleri eklendi.
+- Web E2E sayfa gecisleri harici gorsellerin tamamlanmasini beklemeden API sonucunu dogrulayacak sekilde kararlı hale getirildi.
+- Web sayfalari route bazinda lazy yukleniyor; ana JavaScript parcasi 528.12 kB'den 197.40 kB'ye dustu ve Vite bundle uyarisi kapandi.
+- Rate limiter artik CORS preflight `OPTIONS` isteklerini kotadan dusmuyor; tarayicinin limit dolunca sahte baglanti hatasi gostermesine yol acan regresyon testle kapatildi.
+
+## Guvenlik ve Agent Dogrulamasi
+
+| Kontrol | Sonuc |
+| --- | --- |
+| Web production dependency audit | PASS, 0 acik |
+| Mobil production dependency audit | PASS, 0 acik |
+| Expo paket uyumlulugu | PASS, tum bagimliliklar guncel ve SDK ile uyumlu |
+| Xcode UUID uretimi | PASS, guvenli `uuid@11.1.1` override'i ile calisiyor |
+| Ozel `integration-qa` skill dogrulamasi | PASS |
+| Gercek API kullanim guard'i | PASS, mock import/kullanim yok |
+
+Expo'nun `xcode@3.0.1 -> uuid@7.0.3` zincirindeki guvenlik uyarisi, sadece bu alt bagimliligi CommonJS uyumlu guvenli `uuid@11.1.1` surumune sabitleyen npm override'i ile kapatildi. Expo export, paket uyumluluk kontrolu ve dogrudan Xcode UUID uretimi yeniden dogrulandi.
+
 ## Kalan QA Riskleri
 
 | Risk | Durum |
 | --- | --- |
-| UI E2E | Frontend/mobil ekranlari hazir olunca Playwright/Cypress veya Maestro ile kosulacak |
+| Mobil native E2E | Expo web canli akisi dogrulandi; fiziksel iOS/Android icin Maestro senaryosu sonraki iyilestirme olabilir |
 | Production rate limit | Demo icin in-memory; production icin Redis/API gateway onerilir |
 | Admin panel | Kapsam disi; urunler seed uzerinden geliyor |

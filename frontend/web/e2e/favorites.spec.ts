@@ -5,7 +5,7 @@ test.describe('Favorites', () => {
   test('add and remove favorite, verify persistence', async ({ page }) => {
     // Register unique user
     await registerUser(page);
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     // Wait for products
     await expect(
@@ -34,7 +34,7 @@ test.describe('Favorites', () => {
     ).toBeVisible();
 
     // Go to favorites page
-    await page.goto('/favorites');
+    await page.goto('/favorites', { waitUntil: 'domcontentloaded' });
     await expect(page.getByText('Nova X Pro')).toBeVisible();
 
     // Remove from favorites
@@ -54,7 +54,7 @@ test.describe('Favorites', () => {
   test('guest user redirected to login when clicking favorite', async ({
     page,
   }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     // Wait for products
     await expect(

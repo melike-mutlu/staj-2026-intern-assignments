@@ -59,3 +59,24 @@ Herhangi bir sorunuz olursa GitHub Issues üzerinden soru sorabilir ya da PR aç
 ---
 
 **Başarılar!**
+
+## Bu Repodaki E-Ticaret Uygulaması
+
+Takım uygulaması artık tek backend'i kullanan web ve Expo mobil istemcilerinden oluşur. Ürün, sepet, kullanıcı, favori, adres ve sipariş akışları gerçek FastAPI endpointlerine bağlıdır.
+
+| Parça | Başlangıç rehberi |
+| --- | --- |
+| Backend + Swagger + Docker | [`backend/README.md`](./backend/README.md) |
+| Web | [`frontend/web/README.md`](./frontend/web/README.md) |
+| Mobil | [`frontend/mobile/README.md`](./frontend/mobile/README.md) |
+| Frontend API teslim rehberi | [`backend/docs/FRONTEND_HANDOFF.md`](./backend/docs/FRONTEND_HANDOFF.md) |
+| QA raporu | [`backend/qa/TEST_REPORT.md`](./backend/qa/TEST_REPORT.md) |
+| Özel skill ve agent | [`SKILLS.md`](./SKILLS.md) |
+
+Backend'i Docker ile başlattıktan sonra web ve mobil istemciler varsayılan olarak `http://localhost:8000` adresindeki aynı API'yi kullanır. Demo hesabı: `demo@eticaret.com` / `DemoPass123`.
+
+Tüm hızlı kabul kontrolleri:
+
+```bash
+bash .claude/skills/integration-qa/scripts/run-integration-qa.sh
+```

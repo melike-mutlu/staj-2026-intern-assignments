@@ -5,32 +5,32 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default function TabLayout() {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: colors.brand.teal }}>
+    <Tabs screenOptions={{ tabBarActiveTintColor: colors.brand.teal, headerShown: false }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: 'Ana Sayfa',
           tabBarIcon: ({ color }) => <Ionicons name="home-outline" size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="search"
         options={{
-          title: 'Search',
+          title: 'Ara',
           tabBarIcon: ({ color }) => <Ionicons name="search-outline" size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="cart"
         options={{
-          title: 'Cart',
+          title: 'Sepet',
           tabBarIcon: ({ color }) => <Ionicons name="cart-outline" size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
+          title: 'Hesabım',
           tabBarIcon: ({ color }) => <Ionicons name="person-outline" size={24} color={color} />,
         }}
       />

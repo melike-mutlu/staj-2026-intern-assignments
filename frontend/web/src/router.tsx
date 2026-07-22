@@ -1,34 +1,38 @@
+import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { RootLayout } from './components/layout/RootLayout';
 import { RequireAuth } from './components/layout/RequireAuth';
-import { HomePage } from './pages/HomePage';
-import { ProductDetailPage } from './pages/ProductDetailPage';
-import { CartPage } from './pages/CartPage';
-import { CheckoutPage } from './pages/CheckoutPage';
-import { OrderConfirmPage } from './pages/OrderConfirmPage';
-import { OrdersPage } from './pages/OrdersPage';
-import { ProfilePage } from './pages/ProfilePage';
-import { LoginPage } from './pages/LoginPage';
-import { RegisterPage } from './pages/RegisterPage';
-import { SearchPage } from './pages/SearchPage';
-import { FavoritesPage } from './pages/FavoritesPage';
+
+const pages = {
+  Home: lazy(() => import('./pages/HomePage').then(({ HomePage }) => ({ default: HomePage }))),
+  ProductDetail: lazy(() => import('./pages/ProductDetailPage').then(({ ProductDetailPage }) => ({ default: ProductDetailPage }))),
+  Cart: lazy(() => import('./pages/CartPage').then(({ CartPage }) => ({ default: CartPage }))),
+  Checkout: lazy(() => import('./pages/CheckoutPage').then(({ CheckoutPage }) => ({ default: CheckoutPage }))),
+  OrderConfirm: lazy(() => import('./pages/OrderConfirmPage').then(({ OrderConfirmPage }) => ({ default: OrderConfirmPage }))),
+  Orders: lazy(() => import('./pages/OrdersPage').then(({ OrdersPage }) => ({ default: OrdersPage }))),
+  Profile: lazy(() => import('./pages/ProfilePage').then(({ ProfilePage }) => ({ default: ProfilePage }))),
+  Login: lazy(() => import('./pages/LoginPage').then(({ LoginPage }) => ({ default: LoginPage }))),
+  Register: lazy(() => import('./pages/RegisterPage').then(({ RegisterPage }) => ({ default: RegisterPage }))),
+  Search: lazy(() => import('./pages/SearchPage').then(({ SearchPage }) => ({ default: SearchPage }))),
+  Favorites: lazy(() => import('./pages/FavoritesPage').then(({ FavoritesPage }) => ({ default: FavoritesPage }))),
+};
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
     children: [
-      { index: true, element: <HomePage /> },
-      { path: 'product/:id', element: <ProductDetailPage /> },
-      { path: 'cart', element: <CartPage /> },
-      { path: 'checkout', element: <RequireAuth><CheckoutPage /></RequireAuth> },
-      { path: 'order-confirm/:orderId', element: <RequireAuth><OrderConfirmPage /></RequireAuth> },
-      { path: 'orders', element: <RequireAuth><OrdersPage /></RequireAuth> },
-      { path: 'profile', element: <RequireAuth><ProfilePage /></RequireAuth> },
-      { path: 'favorites', element: <RequireAuth><FavoritesPage /></RequireAuth> },
-      { path: 'login', element: <LoginPage /> },
-      { path: 'register', element: <RegisterPage /> },
-      { path: 'search', element: <SearchPage /> },
+      { index: true, element: <pages.Home /> },
+      { path: 'product/:id', element: <pages.ProductDetail /> },
+      { path: 'cart', element: <pages.Cart /> },
+      { path: 'checkout', element: <RequireAuth><pages.Checkout /></RequireAuth> },
+      { path: 'order-confirm/:orderId', element: <RequireAuth><pages.OrderConfirm /></RequireAuth> },
+      { path: 'orders', element: <RequireAuth><pages.Orders /></RequireAuth> },
+      { path: 'profile', element: <RequireAuth><pages.Profile /></RequireAuth> },
+      { path: 'favorites', element: <RequireAuth><pages.Favorites /></RequireAuth> },
+      { path: 'login', element: <pages.Login /> },
+      { path: 'register', element: <pages.Register /> },
+      { path: 'search', element: <pages.Search /> },
     ]
   }
 ]);

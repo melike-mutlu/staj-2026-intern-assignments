@@ -9,7 +9,7 @@ test.describe('Guest Cart', () => {
     await addProductToCartFromDetail(page);
 
     // 2. Go to cart, verify product is there
-    await page.goto('/cart');
+    await page.goto('/cart', { waitUntil: 'domcontentloaded' });
     await expect(page.getByText('SwiftCharge 65W')).toBeVisible();
 
     // 3. Reload — verify guest cart persists via localStorage
@@ -22,7 +22,7 @@ test.describe('Guest Cart', () => {
 
     // 5. Register a unique user instead of using demo
     const email = generateTestEmail();
-    await page.goto('/register');
+    await page.goto('/register', { waitUntil: 'domcontentloaded' });
     await page.getByLabel('Full Name').fill('Guest Cart Test');
     await page.getByLabel('Email').fill(email);
     await page.getByLabel('Password', { exact: true }).fill(TEST_PASSWORD);
@@ -33,7 +33,7 @@ test.describe('Guest Cart', () => {
     await page.waitForURL((url) => !url.pathname.includes('/register'));
 
     // 6. Go to cart page
-    await page.goto('/cart');
+    await page.goto('/cart', { waitUntil: 'domcontentloaded' });
 
     // 7. Verify merge banner is visible
     await expect(page.getByRole('button', { name: /Hesabıma Aktar/i })).toBeVisible();

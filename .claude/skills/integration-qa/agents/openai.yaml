@@ -1,0 +1,4 @@
+interface:
+  display_name: "Integration QA"
+  short_description: "Backend, web ve mobil entegrasyonunu doğrula"
+  default_prompt: "Use $integration-qa to verify the backend, web, and mobile integration end to end."
